@@ -1,0 +1,4 @@
+bin
+obj
+wwwroot/albums/*
+!wwwroot/albums/README.md

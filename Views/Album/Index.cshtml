@@ -1,0 +1,43 @@
+﻿@model AlbumViewModel
+@{
+    ViewData["Title"] = $"Album {Model.Name}";
+}
+<div class="Container">
+<h1>@ViewData["Title"]</h1>
+
+<div class="validation-errors" asp-validation-summary="All"></div>
+
+<div class="upload-panel">
+<h6>Carica una o più foto</h6>
+<form asp-action="AddImages" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="Album" value="@Model.Name">
+    <input type="file" name="Images" multiple>
+    <button class="btn btn-primary">Carica</button>
+</form>
+</div>
+
+<h5>Foto esistenti (@Model.Images.Count)</h6>
+<form method="POST">
+<input type="hidden" name="Album" value="@Model.Name">
+<ul class="album-images">
+    @foreach (var image in Model.Images)
+    {
+    <li>
+        <img src="/albums/@Model.Name/@image.Name" asp-append-version="true">
+        <footer>
+            @if (image.IsDefault)
+            {
+            <button asp-action="SetDefaultImage" class="btn btn-secondary btn-sm" disabled>Immagine default</button>
+            }
+            else
+            {
+            <button asp-action="SetDefaultImage" class="btn btn-primary btn-sm" name="Image" value="@image.Name">Imposta come default</button>    
+            }
+            <button asp-action="RotateImageClockwise" class="btn btn-primary btn-sm" name="Image" value="@image.Name">Ruota</button>
+            <button asp-action="RemoveImage" class="btn btn-danger btn-sm" name="Image" value="@image.Name">Elimina</button>
+        </footer>
+    </li>
+    }
+</ul>
+</form>
+</div>

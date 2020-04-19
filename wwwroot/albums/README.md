@@ -1,0 +1,1 @@
+Qui verranno salvate le foto degli album
